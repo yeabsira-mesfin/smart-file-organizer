@@ -17,12 +17,15 @@ class RuleEngine:
                 lower_exts.append(ext.lower())
             self.rules[category] = lower_exts
     def categorize(self,file_path: str)-> str:
-        extensions = []
-        path = ""
+        _,ext = os.path.splitext(file_path)
+        ext = ext.lower()
         for category, extensions in self.rules.items():
-            path = os.path.split(file_path)
-            if path == ".jpg" or path == ".png" or path ==".jpeg":
+            if ext in extensions:
                 return category
+        return "Other"
+    def destination(self, file_path: str, out_dir:str) -> str: 
+        category = self.categorize(file_path)
+        return os.path.join(out_dir, category)
         
-        
+            
             
